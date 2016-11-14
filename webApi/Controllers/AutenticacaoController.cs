@@ -33,5 +33,23 @@ namespace webApi.Controllers
 
 			return Ok(cliente.Id_Cliente);
 		}
-	}
+
+        [Route("user")]
+        [HttpPost]
+        [ResponseType(typeof(int))]
+        public async Task<IHttpActionResult> UserPost([FromBody] Newtonsoft.Json.Linq.JObject data)
+        {
+
+            string email = data.GetValue("email").ToString();
+
+            Cliente cliente = db.Clientes.First(x => x.Email == email);
+
+            if (cliente == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(cliente.Id_Cliente);
+        }
+    }
 }
