@@ -233,6 +233,7 @@
     <Compile Include="Models\Mapping\QuadraMap.cs" />
     <Compile Include="Models\Quadra.cs" />
     <Compile Include="Views\ClienteView .cs" />
+    <Compile Include="Views\FavoritoView.cs" />
     <Compile Include="Views\QuadraView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs.cs" />

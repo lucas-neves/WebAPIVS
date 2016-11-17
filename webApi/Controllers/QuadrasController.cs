@@ -22,10 +22,7 @@ namespace webApi.Controllers
         public IQueryable<Quadra> GetQuadras()
         {
             return db.Quadras;
-        }
-
-
-		
+        }		
 
 
 		// GET: api/Quadras/5
@@ -92,7 +89,7 @@ namespace webApi.Controllers
 
             return CreatedAtRoute("DefaultApi", new { id = quadra.Id_Quadra }, quadra);
         }
-
+        
         // DELETE: api/Quadras/5
         [ResponseType(typeof(Quadra))]
         public async Task<IHttpActionResult> DeleteQuadra(int id)
