@@ -18,10 +18,14 @@ namespace webApi.Controllers
     {
         private JogaJuntoDBContext db = new JogaJuntoDBContext();
 
+        //https://www.asp.net/web-api/overview/data/using-web-api-with-entity-framework/part-4
+
         // GET: api/Quadras
         public IQueryable<Quadra> GetQuadras()
         {
             return db.Quadras;
+                //.Include(b => b.Dono)
+                //.Include(b => b.Endereco);
         }		
 
 
@@ -30,6 +34,8 @@ namespace webApi.Controllers
         public async Task<IHttpActionResult> GetQuadra(int id)
         {
             Quadra quadra = await db.Quadras.FindAsync(id);
+            db.Quadras.Include(b => b.Dono)
+                      .Include(b => b.Endereco);
             if (quadra == null)
             {
                 return NotFound();

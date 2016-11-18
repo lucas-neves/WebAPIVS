@@ -31,5 +31,7 @@ namespace webApi.Models
 		public double Valor_Quadra { get; set; }
 		public string Descricao { get; set; }
 		public string Image_Path { get; set; }
-	}
+        public virtual Dono Dono { get; set; }
+        public virtual Endereco Endereco { get; set; }
+    }
 }
