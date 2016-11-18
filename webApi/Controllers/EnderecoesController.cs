@@ -24,7 +24,7 @@ namespace webApi.Controllers
         }
 
         // GET: api/Enderecoes/5
-        [ResponseType(typeof(Endereco))]
+        [ResponseType(typeof(EnderecoView))]
         public async Task<IHttpActionResult> GetEndereco(int id)
         {
             Endereco endereco = await db.Enderecoes.FindAsync(id);
@@ -33,7 +33,7 @@ namespace webApi.Controllers
                 return NotFound();
             }
 
-            return Ok(endereco);
+            return Ok(new EnderecoView(endereco));
         }
 
         // PUT: api/Enderecoes/5

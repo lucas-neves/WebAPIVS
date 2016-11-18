@@ -215,10 +215,14 @@
     <Compile Include="CtEndereco.cs" />
     <Compile Include="CtFavorito.cs" />
     <Compile Include="CtQuadra.cs" />
+    <Compile Include="Views\ContaView.cs" />
+    <Compile Include="Views\AluguelView.cs" />
     <Compile Include="Models\Aluguel.cs" />
     <Compile Include="Models\Cliente.cs" />
     <Compile Include="Models\Conta.cs" />
     <Compile Include="Models\database_firewall_rules.cs" />
+    <Compile Include="Views\EnderecoView.cs" />
+    <Compile Include="Views\DonoView.cs" />
     <Compile Include="Models\Dono.cs" />
     <Compile Include="Models\Endereco.cs" />
     <Compile Include="Models\Favorito.cs" />

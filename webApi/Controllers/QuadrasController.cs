@@ -34,8 +34,7 @@ namespace webApi.Controllers
         public async Task<IHttpActionResult> GetQuadra(int id)
         {
             Quadra quadra = await db.Quadras.FindAsync(id);
-            db.Quadras.Include(b => b.Dono)
-                      .Include(b => b.Endereco);
+            
             if (quadra == null)
             {
                 return NotFound();

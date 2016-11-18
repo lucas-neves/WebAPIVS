@@ -24,7 +24,7 @@ namespace webApi.Controllers
         }
 
         // GET: api/Favoritoes/5
-        [ResponseType(typeof(Favorito))]
+        [ResponseType(typeof(FavoritoView))]
         public async Task<IHttpActionResult> GetFavorito(int id)
         {
             Favorito favorito = await db.Favoritoes.FindAsync(id);
@@ -33,7 +33,7 @@ namespace webApi.Controllers
                 return NotFound();
             }
 
-            return Ok(favorito);
+            return Ok(new FavoritoView(favorito));
         }
 
         // PUT: api/Favoritoes/5

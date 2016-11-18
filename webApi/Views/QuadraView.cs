@@ -19,8 +19,10 @@ namespace webApi.Models
             Tipo_Quadra = quadra.Tipo_Quadra;
             Valor_Quadra = quadra.Valor_Quadra;
             Descricao = quadra.Descricao;
-            Image_Path = quadra.Image_Path;						
-		}
+            Image_Path = quadra.Image_Path;
+            Dono = quadra.Dono;
+            Endereco = quadra.Endereco;
+        }
 		public int Id_Quadra { get; set; }
 		public int Id_Dono { get; set; }
 		public int Id_End { get; set; }

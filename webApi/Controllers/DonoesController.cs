@@ -25,7 +25,7 @@ namespace webApi.Controllers
         }
 
         // GET: api/Donoes/5
-        [ResponseType(typeof(Dono))]
+        [ResponseType(typeof(DonoView))]
         public async Task<IHttpActionResult> GetDono(int id)
         {
             Dono dono = await db.Donoes.FindAsync(id);
@@ -34,7 +34,7 @@ namespace webApi.Controllers
                 return NotFound();
             }
 
-            return Ok(dono);
+            return Ok(new DonoView(dono));
         }
 
         // PUT: api/Donoes/5

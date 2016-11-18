@@ -26,7 +26,7 @@ namespace webApi.Controllers
 
         // GET: api/Contas/
         [HttpGet]
-        [ResponseType(typeof(Conta))]
+        [ResponseType(typeof(ContaView))]
         public async Task<IHttpActionResult> GetConta(int id)
         {
             Conta conta = await db.Contas.FindAsync(id);
@@ -35,7 +35,7 @@ namespace webApi.Controllers
                 return NotFound();
             }
 
-            return Ok(conta);
+            return Ok(new ContaView(conta));
         }
 
         // PUT: api/Contas/5

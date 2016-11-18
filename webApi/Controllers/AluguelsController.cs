@@ -24,7 +24,7 @@ namespace webApi.Controllers
         }
 
         // GET: api/Aluguels/5
-        [ResponseType(typeof(Aluguel))]
+        [ResponseType(typeof(AluguelView))]
         public async Task<IHttpActionResult> GetAluguel(int id)
         {
             Aluguel aluguel = await db.Aluguels.FindAsync(id);
@@ -33,7 +33,7 @@ namespace webApi.Controllers
                 return NotFound();
             }
 
-            return Ok(aluguel);
+            return Ok(new AluguelView(aluguel));
         }
 
         // PUT: api/Aluguels/5
