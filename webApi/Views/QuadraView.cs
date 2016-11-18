@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace webApi.Models
 {
-	class QuadraView
+	public class QuadraView
 	{
 		public QuadraView(Quadra quadra)
 		{
@@ -20,8 +20,8 @@ namespace webApi.Models
             Valor_Quadra = quadra.Valor_Quadra;
             Descricao = quadra.Descricao;
             Image_Path = quadra.Image_Path;
-            Dono = quadra.Dono;
-            Endereco = quadra.Endereco;
+            Dono = new DonoView(quadra.Dono);
+            Endereco = new EnderecoView(quadra.Endereco);
         }
 		public int Id_Quadra { get; set; }
 		public int Id_Dono { get; set; }
@@ -33,7 +33,7 @@ namespace webApi.Models
 		public double Valor_Quadra { get; set; }
 		public string Descricao { get; set; }
 		public string Image_Path { get; set; }
-        public virtual Dono Dono { get; set; }
-        public virtual Endereco Endereco { get; set; }
+        public virtual DonoView Dono { get; set; }
+        public virtual EnderecoView Endereco { get; set; }
     }
 }

@@ -14,17 +14,16 @@ namespace webApi.Models
             Confirm = aluguel.Confirm;
             Id_Quadra = aluguel.Id_Quadra;
             Id_Cliente = aluguel.Id_Cliente;
-            Cliente = aluguel.Cliente;
-            Quadra = aluguel.Quadra;
+            Cliente = new ClienteView(aluguel.Cliente);
+            Quadra = new QuadraView(aluguel.Quadra);
         }
-
         public int Id_Aluguel { get; set; }
         public System.DateTime DataJogo { get; set; }
         public Nullable<System.TimeSpan> Hora { get; set; }
         public bool Confirm { get; set; }
         public int Id_Quadra { get; set; }
         public int Id_Cliente { get; set; }
-        public virtual Cliente Cliente { get; set; }
-        public virtual Quadra Quadra { get; set; }
+        public virtual ClienteView Cliente { get; set; }
+        public virtual QuadraView Quadra { get; set; }
     }
 }

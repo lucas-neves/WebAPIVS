@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace webApi.Models
 {
-	class ClienteView
+	public class ClienteView
 	{
 		public ClienteView(Cliente cliente)
 		{

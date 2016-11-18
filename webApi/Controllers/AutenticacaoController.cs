@@ -51,5 +51,30 @@ namespace webApi.Controllers
 
             return Ok(cliente.Id_Cliente);
         }
-    }
+
+		[Route("cadastro")]
+		[HttpPost]
+		[ResponseType(typeof(int))]
+		public async Task<IHttpActionResult> CadastroPost(Cliente cliente)
+		{
+
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
+
+			Cliente cl = db.Clientes.First(x => x.Email == cliente.Email);
+
+			if (cl.Id_Cliente != null)
+			{
+				return BadRequest("Email já existe.");
+			}
+
+			db.Clientes.Add(cliente);
+			await db.SaveChangesAsync();
+
+			return CreatedAtRoute("DefaultApi", new { id = cliente.Id_Cliente }, cliente);
+		}
+
+	}
 }

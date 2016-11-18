@@ -21,11 +21,16 @@ namespace webApi.Controllers
         //https://www.asp.net/web-api/overview/data/using-web-api-with-entity-framework/part-4
 
         // GET: api/Quadras
-        public IQueryable<Quadra> GetQuadras()
+        public IList<QuadraView> GetQuadras()
         {
-            return db.Quadras;
-                //.Include(b => b.Dono)
-                //.Include(b => b.Endereco);
+			IQueryable<Quadra> quadras = db.Quadras;
+			IList<QuadraView> retorno = new List<QuadraView>();
+
+			foreach (var quadra in quadras)
+			{
+				retorno.Add(new QuadraView(quadra));
+			}
+            return retorno;
         }		
 
 

@@ -13,12 +13,9 @@ namespace webApi.Models
             Nr_Ag = acc.Nr_Ag;
             Nr_Bank = acc.Nr_Bank;
         }
-
 		public int Id_Acc { get; set; }
         public string Nr_Acc { get; set; }
         public string Nr_Ag { get; set; }
         public string Nr_Bank { get; set; }
-        public virtual ICollection<Cliente> Clientes { get; set; }
-        public virtual ICollection<Dono> Donoes { get; set; }
     }
 }
