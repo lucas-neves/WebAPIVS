@@ -19,9 +19,16 @@ namespace webApi.Controllers
         private JogaJuntoDBContext db = new JogaJuntoDBContext();
 
         // GET: api/Clientes
-        public IQueryable<Cliente> GetClientes()
+        public IList<ClienteView> GetClientes()
         {
-            return db.Clientes;
+            IQueryable<Cliente> clientes = db.Clientes;
+            IList<ClienteView> retorno = new List<ClienteView>();
+
+            foreach (var cliente in clientes)
+            {
+                retorno.Add(new ClienteView(cliente));
+            }
+            return retorno;
         }
 
 		// GET: api/Clientes/5		

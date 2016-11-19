@@ -18,8 +18,6 @@ namespace webApi.Controllers
     {
         private JogaJuntoDBContext db = new JogaJuntoDBContext();
 
-        //https://www.asp.net/web-api/overview/data/using-web-api-with-entity-framework/part-4
-
         // GET: api/Quadras
         public IList<QuadraView> GetQuadras()
         {

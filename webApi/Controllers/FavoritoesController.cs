@@ -18,9 +18,16 @@ namespace webApi.Controllers
         private JogaJuntoDBContext db = new JogaJuntoDBContext();
 
         // GET: api/Favoritoes
-        public IQueryable<Favorito> GetFavoritoes()
+        public IList<FavoritoView> GetFavoritoes()
         {
-            return db.Favoritoes;
+            IQueryable<Favorito> favoritos = db.Favoritoes;
+            IList<FavoritoView> retorno = new List<FavoritoView>();
+
+            foreach (var favorito in favoritos)
+            {
+                retorno.Add(new FavoritoView(favorito));
+            }
+            return retorno;
         }
 
         // GET: api/Favoritoes/5

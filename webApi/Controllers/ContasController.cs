@@ -19,9 +19,16 @@ namespace webApi.Controllers
 
         // GET: api/Contas
         [HttpGet]
-        public IQueryable<Conta> GetContas()
+        public IList<ContaView> GetContas()
         {
-            return db.Contas;
+            IQueryable<Conta> contas = db.Contas;
+            IList<ContaView> retorno = new List<ContaView>();
+
+            foreach (var conta in contas)
+            {
+                retorno.Add(new ContaView(conta));
+            }
+            return retorno;
         }
 
         // GET: api/Contas/

@@ -18,9 +18,16 @@ namespace webApi.Controllers
         private JogaJuntoDBContext db = new JogaJuntoDBContext();
 
         // GET: api/Enderecoes
-        public IQueryable<Endereco> GetEnderecoes()
+        public IList<EnderecoView> GetEnderecoes()
         {
-            return db.Enderecoes;
+            IQueryable<Endereco> enderecos = db.Enderecoes;
+            IList<EnderecoView> retorno = new List<EnderecoView>();
+
+            foreach (var endereco in enderecos)
+            {
+                retorno.Add(new EnderecoView(endereco));
+            }
+            return retorno;
         }
 
         // GET: api/Enderecoes/5
