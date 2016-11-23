@@ -17,7 +17,7 @@ namespace webApi.Controllers
 
 		[Route("login")]
 		[HttpPost]
-		[ResponseType(typeof(int))]
+		[ResponseType(typeof(ClienteView))]
 		public async Task<IHttpActionResult> Post([FromBody] Newtonsoft.Json.Linq.JObject data)
 		{
 
@@ -31,7 +31,7 @@ namespace webApi.Controllers
 				return NotFound();
 			}
 
-			return Ok(cliente.Id_Cliente);
+			return Ok(new ClienteView(cliente));
 		}
 
         [Route("user")]
