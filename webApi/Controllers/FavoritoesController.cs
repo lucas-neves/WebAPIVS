@@ -6,7 +6,6 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Data.SqlClient;
-using System.Data;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -79,39 +78,39 @@ namespace webApi.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Favoritoes
-        [ResponseType(typeof(Favorito))]
+        // POST: api/
+        [HttpPost]
+        [ResponseType(typeof(void))]
+        [Route("api/Favoritoes/like")]
         public async Task<IHttpActionResult> PostFavorito(Favorito favorito)
         {
-            int id;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
             if (db.Favoritoes.Count(x => x.Id_Quadra == favorito.Id_Quadra) > 0)
-            //if(fav.Id != null)
             {
                 return BadRequest("Esta quadra já foi favoritada.");
             }
 
-            using (SqlConnection conn = new SqlConnection())
+            const string queryTransaction = "INSERT INTO FAVORITOS (Id_Quadra, Id_Cliente) VALUES (@Id_Quadra, @Id_Cliente)";
+            var constr = System.Configuration.ConfigurationManager.ConnectionStrings["JogaJuntoDBContext"].ConnectionString;
+
+            using (var con = new SqlConnection(constr))
             {
-                conn.Open();
-                using (SqlCommand cmd = new SqlCommand("INSERT INTO FAVORITOS (Id_Quadra, Id_Cliente) OUTPUT INSERTED.Id VALUES (@Id_Quadra, @Id_Cliente)", conn))
+                con.Open();
+                using (var cmd = new SqlCommand(queryTransaction, con))
                 {
                     cmd.Parameters.AddWithValue("@Id_Quadra", favorito.Id_Quadra);
                     cmd.Parameters.AddWithValue("@Id_Cliente", favorito.Id_Cliente);
 
-                    id = (int)cmd.ExecuteScalar();
+                    cmd.ExecuteNonQuery();                   
                 }
+                con.Close();
             }
-
-            //db.Favoritoes.Add(favorito);
-            //await db.SaveChangesAsync();
-
-            favorito.Id_Favorito = id;
-            return CreatedAtRoute("DefaultApi", new { id = favorito.Id_Favorito }, favorito);
+            
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
         // DELETE: api/Favoritoes/5
