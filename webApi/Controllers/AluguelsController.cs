@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -78,8 +79,10 @@ namespace webApi.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Aluguels
-        [ResponseType(typeof(Aluguel))]
+        // POST: api/
+        [HttpPost]
+        [ResponseType(typeof(void))]
+        [Route("api/Aluguels/reservar")]
         public async Task<IHttpActionResult> PostAluguel(Aluguel aluguel)
         {
             if (!ModelState.IsValid)
@@ -87,10 +90,30 @@ namespace webApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Aluguels.Add(aluguel);
-            await db.SaveChangesAsync();
+            if (db.Aluguels.Count(x => x.DataJogo == aluguel.DataJogo && x.Hora == aluguel.Hora) > 0)
+            {
+                return BadRequest("O espaço não está disponível nesta data/horário.");
+            }
 
-            return CreatedAtRoute("DefaultApi", new { id = aluguel.Id_Aluguel }, aluguel);
+            const string queryTransaction = "INSERT INTO ALUGUEL (DataJogo, Hora, Id_Quadra, Id_Cliente) VALUES (@DataJogo, @Hora, @Id_Quadra, @Id_Cliente)";
+            var constr = System.Configuration.ConfigurationManager.ConnectionStrings["JogaJuntoDBContext"].ConnectionString;
+
+            using (var con = new SqlConnection(constr))
+            {
+                con.Open();
+                using (var cmd = new SqlCommand(queryTransaction, con))
+                {
+                    cmd.Parameters.AddWithValue("@DataJogo", aluguel.DataJogo);
+                    cmd.Parameters.AddWithValue("@Hora", aluguel.Hora);
+                    cmd.Parameters.AddWithValue("@Id_Quadra", aluguel.Id_Quadra);
+                    cmd.Parameters.AddWithValue("@Id_Cliente", aluguel.Id_Cliente);
+
+                    cmd.ExecuteNonQuery();
+                }
+                con.Close();
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
         // DELETE: api/Aluguels/5
