@@ -64,7 +64,7 @@ namespace webApi.Controllers
 				return BadRequest(ModelState);
 			}
 
-            const string queryTransaction = "INSERT INTO Cliente (Username, Senha, Email) VALUES (@Username, @Senha, @Email)";
+            const string queryTransaction = "INSERT INTO Cliente (Username, Senha, Email, Id_Acc, Id_End) VALUES (@Username, @Senha, @Email, @Id_Acc, @Id_End)";
             var constr = System.Configuration.ConfigurationManager.ConnectionStrings["JogaJuntoDBContext"].ConnectionString;
 
             using (var con = new SqlConnection(constr))
@@ -75,6 +75,8 @@ namespace webApi.Controllers
                     cmd.Parameters.AddWithValue("@Username", cliente.Username);
                     cmd.Parameters.AddWithValue("@Senha", cliente.Senha);
                     cmd.Parameters.AddWithValue("@Email", cliente.Email);
+                    cmd.Parameters.AddWithValue("@Id_Acc", 1);
+                    cmd.Parameters.AddWithValue("@Id_End", 3);
 
                     cmd.ExecuteNonQuery();
                 }
