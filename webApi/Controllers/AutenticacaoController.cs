@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -54,7 +55,7 @@ namespace webApi.Controllers
 
 		[Route("cadastro")]
 		[HttpPost]
-		[ResponseType(typeof(int))]
+		[ResponseType(typeof(void))]
 		public async Task<IHttpActionResult> CadastroPost(Cliente cliente)
 		{
 
@@ -63,18 +64,25 @@ namespace webApi.Controllers
 				return BadRequest(ModelState);
 			}
 
-			Cliente cl = db.Clientes.First(x => x.Email == cliente.Email);
+            const string queryTransaction = "INSERT INTO Cliente (Username, Senha, Email) VALUES (@Username, @Senha, @Email)";
+            var constr = System.Configuration.ConfigurationManager.ConnectionStrings["JogaJuntoDBContext"].ConnectionString;
 
-			if (cl.Id_Cliente != null)
-			{
-				return BadRequest("Email já existe.");
-			}
+            using (var con = new SqlConnection(constr))
+            {
+                con.Open();
+                using (var cmd = new SqlCommand(queryTransaction, con))
+                {
+                    cmd.Parameters.AddWithValue("@Username", cliente.Username);
+                    cmd.Parameters.AddWithValue("@Senha", cliente.Senha);
+                    cmd.Parameters.AddWithValue("@Email", cliente.Email);
 
-			db.Clientes.Add(cliente);
-			await db.SaveChangesAsync();
+                    cmd.ExecuteNonQuery();
+                }
+                con.Close();
+            }
 
-			return CreatedAtRoute("DefaultApi", new { id = cliente.Id_Cliente }, cliente);
-		}
+            return StatusCode(HttpStatusCode.NoContent);
+        }
 
 	}
 }
